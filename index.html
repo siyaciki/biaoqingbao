@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>
+            *{
+                margin: 0;
+            }
+            .test{
+                width: 100px;
+                height: 100px;
+                text-align: center;
+                line-height: 100px;
+                background-color: #87CEEB;
+                display: inline-block;
+                vertical-align:top;
+            }
+            canvas{
+                margin-right: 5px;
+            }
+            .down{
+                float: right;
+                 margin: 40px 10px;
+            }
+        </style>
+    </head>
+    <body>
+    <a class="down" href="" download="downImg">下载</a>
+     
+    <div class="test">测试</div>
+     
+    <script src="html2canvas.min.js"></script>
+<script>   
+     html2canvas(document.querySelector('div')).then(function(canvas) {
+            document.querySelector(".down").setAttribute('href',canvas.toDataURL());
+     });
+</script>
+    </body>
+</html>
