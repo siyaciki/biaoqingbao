@@ -1,4 +1,3 @@
-<!doctype html>
 <html>
 
 	<head>
@@ -7,6 +6,10 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 
 		<style>
+        #jpg{
+            visibility:hidden;
+            display:inline; 
+        }
 		</style>
 	</head>
 
@@ -16,35 +19,33 @@
 	<!-- 将canvas图片保存成图片 -->
 	<script src="js/canvas2image.js"></script>
 	<script src="js/base64.js"></script>
-		
 
-		<div id="jpg">
-			<img src="img/logo.jpg">
+
+		<div id="jpg" style="display:inline;">
+			<img src="img/biaoqingbao.png">
 		</div>
-		<hr>
 		<div align="center">
+
         <div id="content">
-				<div id="img_text">2018/5/25，阴，群主拒绝了女装，这个仇，我先记下了</div>
-               
+				<div id="img_text" style="padding-top:70%;text-indent: 2em;text-align:left;">2018/5/25，阴，群主拒绝了女装，这个仇，我先记下了</div>              
         </div>
-                
+        
 			<div style="padding: 5px 25% 0 25%;">
 <!--				<textarea id="textarea" rows="5" contenteditable="true"></textarea>-->
 				<textarea v-model="cureInfo.Symptom" id="symptomTxt" oninput="autoTextAreaHeight(this)"></textarea>
 				<button id="bt1" type="button" class="mui-btn mui-btn-blue">提交</button>
                     <button id="btnSave">抓取图片1</button>
-                     <button id="btnSave2">抓取图片2</button>
                     <button id="Download">下载图片</button>
 			</div>
              <div id="images"></div>
 		</div>
+
 	</body>
 <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
 </script>
 
 	<script>
 		var myDate = new Date();
-
 		var riqi=myDate.toLocaleDateString()+"，星期"+"日一二三四五六".charAt(new Date().getDay())+"，";
 		
 		//textarea自动随内容增高
@@ -61,9 +62,9 @@
 		
 		var width_img = jQuery("img").width();
 		var height_img = jQuery("img").height();
-		jQuery("#img_text").height(height_img);
-		jQuery("#img_text").width(width_img);
-		jQuery("#img_text").css("background-image", "url(logo.png)");
+		jQuery("#content").height(height_img);
+		jQuery("#content").width(width_img);
+		jQuery("#content").css("background-image", "url(biaoqingbao.png)");
 		//jQuery("#jpg").hide();
 		jQuery("#bt1").click(function(){
 			var str=jQuery("#symptomTxt").val();
@@ -75,15 +76,12 @@
 
 <script>
 /*生成canvas图形*/
-
 // 获取按钮id
 var btnSave = document.getElementById("btnSave");
-var btnSave2 = document.getElementById("btnSave2");
 // 获取内容id
 var content = document.getElementById("content");
 // 进行canvas生成
 btnSave.onclick = function(){
-
 	html2canvas(jQuery("#content").get(0), {
         onrendered: function(canvas) {
         	//添加属性
@@ -95,49 +93,24 @@ btnSave.onclick = function(){
         }
 	});
 }
-btnSave2.onclick = function(){
-    html2canvas(document.getElementById('content'), {
-        onrendered: function(canvas) {
-            document.body.appendChild(canvas);
-        },
-
-    });
-    }
-
-
     
     var Download = document.getElementById("Download");
  //下载图片   
 Download.onclick = function(){
 	var oCanvas = document.getElementById("thecanvas");
-
     
-    
-    
-    ctx = oCanvas.getContext("2d"), //对应的CanvasRenderingContext2D对象(画笔)
-      img = new Image(),//创建新的图片对象
-      base64 = '' ;//base64 
-      img.setAttribute("crossOrigin",'Anonymous')
-      img.onload = function(){//图片加载完，再draw 和 toDataURL
-      ctx.drawImage(img,0,0);    
-     base64 = canvas.toDataURL("image/png"); 
-       
-
-   };
-        var imgData = oCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-
-      window.location.href= imgData;
+      var imgData = oCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    //  window.location.href= imgData;
     
 	/*自动保存为png*/
 	// 获取图片资源
-	//var img_data1 = Canvas2Image.saveAsJPEG(oCanvas, true).getAttribute('src');
-    //    console.log(typeof(img_data1));
-	//saveFile(img_data1, 'richer.png');
+//	var img_data1 = Canvas2Image.saveAsJPEG(oCanvas, true).getAttribute('src');
+
+	saveFile(imgData, 'note.png');
 	//*下面的为原生的保存，不带格式名*/
 	// 这将会提示用户保存PNG图片
 	// Canvas2Image.saveAsPNG(oCanvas);
 }
-
 // 保存文件函数
 var saveFile = function(data, filename){
     var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
